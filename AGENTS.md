@@ -10,6 +10,7 @@ Enhance and operate the RuView / TimeView radio-sensing system:
 2. **Adaptive multi-sensor** support with **intrinsic auto-synchronization** (no explicit shared clocks).
 3. Prefer physics / wave / temporal-operator driven methods (timemachines operators) over supervised volumetric labels.
 4. Keep performance in the **constant-time family** wherever possible.
+5. **Zero Cognitum dependency** — persistent memory + attestation live in TimeCogs.
 
 ## Mandatory Reading (in order of relevance)
 
@@ -17,7 +18,9 @@ Enhance and operate the RuView / TimeView radio-sensing system:
 - `docs/MULTI_SENSOR_INTRINSIC_SYNC.md` — multi-sensor topologies + intrinsic sync
 - `docs/PERFORMANCE_AUDIT_CONSTANT_TIME.md` — complexity targets
 - `docs/PLATFORM_AGNOSTIC.md` — neutrality rules
-- `python/timeview/` — implementation surface
+- `docs/TIMECOGS_MIGRATION.md` — Cognitum → TimeCogs migration (authoritative)
+- Clean product surface: https://github.com/arccoxx/timeview
+- Temporal runtime (private): https://github.com/arccoxx/timecogs
 
 ## Hard Constraints
 
@@ -25,12 +28,13 @@ Enhance and operate the RuView / TimeView radio-sensing system:
 - Adaptive mode must work with 1..N sensors of mixed topologies (ambient, multi-worn, multi-person, self-connecting).
 - Do not introduce model-vendor lock-in into core libraries.
 - Prefer fixed-K, fixed-mode, DEQ, parallel-scan designs.
+- **Do not depend on Cognitum, Cognitum Seed, or Cognitum marketplace surfaces.**
 - Subsequent edits stay on `main`.
 
 ## Preferred Workflow
 
 1. Load the relevant seed documents into context.
-2. Propose or implement against the abstract interfaces in `python/timeview/multi_sensor.py` (and future modules).
+2. Propose or implement against the abstract interfaces in TimeView / TimeCogs.
 3. Keep changes testable offline (synthetic CSI, unit tests).
 4. Update the living docs when architecture decisions change.
 5. Benchmark scaling vs sensor count and sequence length; flag any regression out of the constant-time family.
@@ -40,5 +44,6 @@ Enhance and operate the RuView / TimeView radio-sensing system:
 - Firmware multi-node mesh already exists (`rv_mesh`, `swarm_bridge`, ESP-NOW, timesync). Build on it; do not reinvent discovery.
 - Proprietary temporal operators live in the linked `timemachines` library; import or mirror patterns, do not assume private weights are present.
 - JSON schemas and pure Python are the interchange format with any agent.
+- Memory + attestation → TimeCogs, not Cognitum Seed.
 
-When in doubt, prefer physics consistency + intrinsic alignment over brittle explicit clock protocols.
+When in doubt, prefer physics consistency + intrinsic alignment over brittle explicit clock protocols or vendor appliance runtimes.
